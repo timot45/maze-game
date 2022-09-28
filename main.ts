@@ -43,3 +43,6 @@ let mySprite = sprites.create(img`
 scene.cameraFollowSprite(mySprite)
 controller.moveSprite(mySprite)
 tiles.setCurrentTilemap(tilemap`level1`)
+forever(function () {
+    music.playMelody("G E F D E D F E ", 60)
+})
