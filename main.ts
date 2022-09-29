@@ -1,8 +1,56 @@
-scene.onOverlapTile(SpriteKind.Player, sprites.castle.tilePath4, function (sprite, location) {
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile1`, function (sprite, location) {
     game.over(true)
+    info.startCountdown(60)
+    mySprite2 = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . 5 5 . . . . . . . . . . . . . 
+        . . 5 . . . . . . . . 5 . . . . 
+        . . 5 5 . . . . . . 5 5 . . . 2 
+        . . . 5 5 . . . . 5 . . . . 2 2 
+        . . . . 2 2 . . 5 5 . . . 2 2 . 
+        . . . . . 2 2 2 5 . . . 2 . . . 
+        . . . . . 2 5 2 . . 2 2 . . . . 
+        . . . . 2 2 5 2 . 2 2 . . . . . 
+        . . . 2 5 5 . . 5 2 . . . . . . 
+        . . 2 2 5 . . . . 5 . . . . . . 
+        . 2 5 5 . 2 2 2 . 5 5 . . . . . 
+        2 5 5 . . . . . . . 5 5 . . . . 
+        . . . . . . . . . . . 5 5 . . . 
+        . . . . . . . . . . . . 5 5 . . 
+        . . . . . . . . . . . . 5 5 . . 
+        `, SpriteKind.Enemy)
+})
+scene.onOverlapTile(SpriteKind.Player, sprites.castle.tilePath4, function (sprite, location) {
+    tiles.setCurrentTilemap(tilemap`level13`)
+})
+function follow_mySprite (mySprite2: Sprite) {
+    mySprite2 = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . 5 5 . . . . . . . . . . . . . 
+        . . 5 . . . . . . . . 5 . . . . 
+        . . 5 5 . . . . . . 5 5 . . . 2 
+        . . . 5 5 . . . . 5 . . . . 2 2 
+        . . . . 2 2 . . 5 5 . . . 2 2 . 
+        . . . . . 2 2 2 5 . . . 2 . . . 
+        . . . . . 2 5 2 . . 2 2 . . . . 
+        . . . . 2 2 5 2 . 2 2 . . . . . 
+        . . . 2 5 5 . . 5 2 . . . . . . 
+        . . 2 2 5 . . . . 5 . . . . . . 
+        . 2 5 5 . 2 2 2 . 5 5 . . . . . 
+        2 5 5 . . . . . . . 5 5 . . . . 
+        . . . . . . . . . . . 5 5 . . . 
+        . . . . . . . . . . . . 5 5 . . 
+        . . . . . . . . . . . . 5 5 . . 
+        `, SpriteKind.Enemy)
+}
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, location) {
+    tiles.setCurrentTilemap(tilemap`level14`)
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.builtin.brick, function (sprite, location) {
     tiles.setCurrentTilemap(tilemap`level3`)
+})
+info.onCountdownEnd(function () {
+    mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.builtin.oceanDepths9, function (sprite, location) {
     tiles.setCurrentTilemap(tilemap`level8`)
@@ -22,6 +70,11 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.collectibleRedCrystal, fu
 scene.onOverlapTile(SpriteKind.Player, sprites.castle.rock2, function (sprite, location) {
     tiles.setCurrentTilemap(tilemap`level4`)
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    info.changeLifeBy(-1)
+})
+let mySprite2: Sprite = null
+info.setLife(4)
 let mySprite = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . 6 6 6 6 6 6 . . . . . . . 
@@ -43,6 +96,3 @@ let mySprite = sprites.create(img`
 scene.cameraFollowSprite(mySprite)
 controller.moveSprite(mySprite)
 tiles.setCurrentTilemap(tilemap`level1`)
-forever(function () {
-    music.playMelody("G E F D E D F E ", 60)
-})
